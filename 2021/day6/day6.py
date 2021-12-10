@@ -1,5 +1,4 @@
 from collections import Counter
-from pprint import pprint
 
 def part1(fishes):
     for day in range(80):
@@ -19,6 +18,7 @@ def part2(fishes):
         fishes[7] += fishes.get(0, 0)
         fishes[9] += fishes.get(0, 0)
         fishes = {fish: fishes.get(fish + 1, 0) for fish in fishes}
+        
     return sum(fishes.values())
 
 def main():
