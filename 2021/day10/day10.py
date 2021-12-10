@@ -46,13 +46,13 @@ def part2(chunks):
                 else: incompleteChunks.pop(); break
     
     # Get scores of all completed chunks
-    chunkScores = []            
+    chunkScores = []
     for iChunk in incompleteChunks:
         stack = []
         for char in iChunk:
             if char in openList: stack.append(char)
             elif char in closeList:
-                if len(stack) and chunkMap[char] == stack[-1]: stack.pop()
+                if chunkMap[char] == stack[-1]: stack.pop()
         completeChunk = [reverseChunkMap[char] for char in stack]
         chunkScores.append(chunkScore(completeChunk))
         
