@@ -3,8 +3,8 @@ openList, closeList = ['(', '[', '{', '<'], [')', ']', '}', '>']
 def part1(chunks):
     points = {
         ')': 3, 
-        ']': 57, 
-        '}': 1197, 
+        ']': 57,
+        '}': 1197,
         '>': 25137
     }
     
@@ -42,7 +42,7 @@ def part2(chunks):
         for char in chunk:
             if char in openList: stack.append(char)
             elif char in closeList:
-                if len(stack) and chunkMap[char] == stack[-1]: stack.pop()
+                if chunkMap[char] == stack[-1]: stack.pop()
                 else: incompleteChunks.pop(); break
     
     # Get scores of all completed chunks
