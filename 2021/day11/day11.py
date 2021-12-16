@@ -1,5 +1,3 @@
-from pprint import pprint
-
 def checkFlash(energy, row, col):
     if 0 <= energy[row][col] <= 9: return 0
     energy[row][col] = 0

@@ -1,5 +1,3 @@
-from pprint import pprint
-
 def checkBingo(board):
     for row in board:
         if row == ['X'] * 5: return True

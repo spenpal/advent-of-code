@@ -1,5 +1,3 @@
-from pprint import pprint
-
 def unique_digit(digit):
     return len(digit) in {2, 3, 4, 7}
 

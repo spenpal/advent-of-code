@@ -1,4 +1,3 @@
-from pprint import pprint
 import math
 
 def checkLowPoint(hmap, row, col):
@@ -15,25 +14,27 @@ def checkLowPoint(hmap, row, col):
 def part1(hmap):
     low_points = []
     row_size, col_size = len(hmap), len(hmap[0])
+    
     for row in range(row_size):
         for col in range(col_size):
             if checkLowPoint(hmap, row, col):
                 low_points.append(hmap[row][col])
+                
     return sum(low_point + 1 for low_point in low_points)
 
-def findBasinSize(hmap, row, col, visited):
-    if not 0 <= row < len(hmap): return 0
-    elif not 0 <= col < len(hmap[0]): return 0
-    elif (row, col) in visited: return 0
-    elif hmap[row][col] == 9: return 0
-    
-    visited.add((row, col))
-    return findBasinSize(hmap, row - 1, col, visited) + \
-            findBasinSize(hmap, row + 1, col, visited) + \
-            findBasinSize(hmap, row, col - 1, visited) + \
-            findBasinSize(hmap, row, col + 1, visited) + 1
-
 def part2(hmap):
+    def findBasinSize(hmap, row, col, visited):
+        if not 0 <= row < len(hmap): return 0
+        elif not 0 <= col < len(hmap[0]): return 0
+        elif (row, col) in visited: return 0
+        elif hmap[row][col] == 9: return 0
+        
+        visited.add((row, col))
+        return findBasinSize(hmap, row - 1, col, visited) + \
+                findBasinSize(hmap, row + 1, col, visited) + \
+                findBasinSize(hmap, row, col - 1, visited) + \
+                findBasinSize(hmap, row, col + 1, visited) + 1
+            
     # Find low points
     low_points = []
     row_size, col_size = len(hmap), len(hmap[0])
