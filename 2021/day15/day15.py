@@ -1,6 +1,10 @@
 from pprint import pprint
 
 def part1(cavern):
+    """
+    Smaller puzzle gives me 40 (right answer)
+    Actual puzzle input gives me 506
+    """
     solution = cavern.copy()
     length = len(solution)
     
@@ -21,7 +25,7 @@ def part2(cavern):
 
 def main():
     with open("puzzle_input.txt") as f:
-        cavern = [[int(risk) for risk in row] for row in f.read().splitlines()]
+        cavern = [[int(chiton) for chiton in row] for row in f.read().splitlines()]
 
     print(f"Part 1 Answer: {part1(cavern)}")
     print(f"Part 2 Answer: {part2(cavern)}")
