@@ -1,6 +1,7 @@
 import re
+import time
 
-def part1(xf_min, xf_max, yf_min, yf_max):
+def part1(unused1, unused2, yf_min, unused3):
     vy = (abs(yf_min) - 1)
     h_max = ((vy + 0.5) ** 2) / 2
     return round(h_max)
@@ -40,8 +41,14 @@ def main():
         y_match = re.search(r'y=(-?\d+)..(-?\d+)', target_area)
         x_area, y_area = (int(x_match[1]), int(x_match[2])), (int(y_match[1]), int(y_match[2]))
     
+    start = time.time()
     print(f"Part 1 Answer: {part1(*x_area, *y_area)}")
+    end = time.time()
+    print(end-start)
+    start = time.time()
     print(f"Part 2 Answer: {part2(*x_area, *y_area)}")
+    end = time.time()
+    print(end-start)
 
 if __name__ == "__main__":
     main()
