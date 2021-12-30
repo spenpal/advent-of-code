@@ -14,7 +14,7 @@ class Integer():
 
 def magnitude(snum):
     if isinstance(snum, Integer): return snum.val
-    return (3 * magnitude(snum[0])) + (2 * magnitude(snum[1]))
+    return 3 * magnitude(snum[0]) + 2 * magnitude(snum[1])
 
 def flatten(container):
     for ele in container:
