@@ -1,7 +1,7 @@
 import re
 import time
 
-def part1(unused1, unused2, yf_min, unused3):
+def part1(yf_min):
     vy = (abs(yf_min) - 1)
     h_max = ((vy + 0.5) ** 2) / 2
     return round(h_max)
