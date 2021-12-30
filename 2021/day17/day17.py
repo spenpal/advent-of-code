@@ -39,16 +39,10 @@ def main():
         target_area = f.read().strip()
         x_match = re.search(r'x=(-?\d+)..(-?\d+)', target_area)
         y_match = re.search(r'y=(-?\d+)..(-?\d+)', target_area)
-        x_area, y_area = (int(x_match[1]), int(x_match[2])), (int(y_match[1]), int(y_match[2]))
+        xf_min, xf_max, yf_min, yf_max = int(x_match[1]), int(x_match[2]), int(y_match[1]), int(y_match[2])
     
-    start = time.time()
-    print(f"Part 1 Answer: {part1(*x_area, *y_area)}")
-    end = time.time()
-    print(end-start)
-    start = time.time()
-    print(f"Part 2 Answer: {part2(*x_area, *y_area)}")
-    end = time.time()
-    print(end-start)
+    print(f"Part 1 Answer: {part1(yf_min)}")
+    print(f"Part 2 Answer: {part2(xf_min, xf_max, yf_min, yf_max)}")
 
 if __name__ == "__main__":
     main()
