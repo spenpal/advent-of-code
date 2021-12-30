@@ -80,15 +80,9 @@ def part1(f):
     return magnitude(result)
 
 def part2(snums):
-    largest_magnitude = float('-inf')
-    
-    for snum1 in snums:
-        for snum2 in snums:
-            result = add(deepcopy(snum1), deepcopy(snum2))
-            reduce(result)
-            largest_magnitude = max(largest_magnitude, magnitude(result))
-            
-    return largest_magnitude
+    return max(magnitude(reduce(add(deepcopy(snum1), deepcopy(snum2)))) 
+               for snum1 in snums 
+               for snum2 in snums)
         
 def main():
     f1 = open("puzzle_input.txt")
