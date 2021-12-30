@@ -57,6 +57,8 @@ def reduce(snum):
         if explode(snum, flat_snum, 1): continue
         if split(snum, flat_snum, 1): continue
         break
+    
+    return snum
 
 def add(snum1, snum2):
     return [snum1, snum2]
