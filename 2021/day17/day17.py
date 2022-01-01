@@ -1,5 +1,4 @@
 import re
-import time
 
 def part1(yf_min):
     vy = (abs(yf_min) - 1)
