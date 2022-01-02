@@ -1,9 +1,7 @@
 import re
-from pprint import pprint
-import time
 from itertools import permutations
 
-rotations = list(permutations(['x', 'y', 'z', '-x', '-y', '-z'], 3))
+rotations = permutations(['x', 'y', 'z', '-x', '-y', '-z'], 3)
 rotations = [rotation for rotation in rotations if len(set(axis[-1] for axis in rotation)) == 3]
 
 def manhattan_distance(c1, c2):
