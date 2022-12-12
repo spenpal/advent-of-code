@@ -23,11 +23,9 @@ def get_successors(height_map, state_x, state_y):
     valid_successors = [
         succ
         for succ in all_successors
-        if succ[0] >= 0
-        and succ[0] < len(height_map)
-        and succ[1] >= 0
-        and succ[1] < len(height_map[0])
-        and elevation(height_map[succ[0]][succ[1]]) - curr_elevation <= 1
+        if 0 <= succ[0] < len(height_map)
+        and 0 <= succ[1] < len(height_map[0])
+        and curr_elevation - elevation(height_map[succ[0]][succ[1]]) <= 1
     ]
     return valid_successors
 
@@ -47,7 +45,7 @@ def breadthFirstSearch(height_map, start_state):
         visited.add(node.get("state"))  # Add state to visited set
 
         state_x, state_y = node.get("state")
-        if height_map[state_x][state_y] == "E":
+        if height_map[state_x][state_y] == "a":
             return node.get("cost")  # Return path cost if goal state is reached
 
         # Add non-visited successors to the fringe
@@ -65,18 +63,8 @@ with open("input.txt") as f:
 
     for ri, row in enumerate(height_map):
         for ci, ele in enumerate(row):
-            if ele == "S":
+            if ele == "E":
                 start_state = (ri, ci)
                 break
 
-print(
-    min(
-        [
-            breadthFirstSearch(height_map, (r, c))
-            for r in range(len(height_map))
-            for c in range(len(height_map[0]))
-            if height_map[r][c] == "a"
-        ]
-        + [breadthFirstSearch(height_map, start_state)]
-    )
-)
+print(breadthFirstSearch(height_map, start_state))
