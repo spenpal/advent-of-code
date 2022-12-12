@@ -30,7 +30,7 @@ def get_successors(height_map, state_x, state_y):
     return valid_successors
 
 
-def breadthFirstSearch(height_map, start_state):
+def BFS(height_map, start_state):
     start = {"state": start_state, "cost": 0}
 
     fringe, visited = deque(), set()
@@ -67,4 +67,4 @@ with open("input.txt") as f:
                 start_state = (ri, ci)
                 break
 
-print(breadthFirstSearch(height_map, start_state))
+print(BFS(height_map, start_state))
