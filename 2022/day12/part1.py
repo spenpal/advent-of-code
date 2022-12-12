@@ -23,10 +23,8 @@ def get_successors(height_map, state_x, state_y):
     valid_successors = [
         succ
         for succ in all_successors
-        if succ[0] >= 0
-        and succ[0] < len(height_map)
-        and succ[1] >= 0
-        and succ[1] < len(height_map[0])
+        if 0 <= succ[0] < len(height_map)
+        and 0 <= succ[1] < len(height_map[0])
         and elevation(height_map[succ[0]][succ[1]]) - curr_elevation <= 1
     ]
     return valid_successors
