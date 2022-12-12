@@ -37,8 +37,7 @@ def BFS(height_map, start_state):
     fringe.append(start)
 
     while fringe:
-        # Unpack elements from fringe
-        node = fringe.popleft()
+        node = fringe.popleft()  # Unpack next node from fringe
 
         if node.get("state") in visited:
             continue
@@ -48,7 +47,7 @@ def BFS(height_map, start_state):
         if height_map[state_x][state_y] == "a":
             return node.get("cost")  # Return path cost if goal state is reached
 
-        # Add non-visited successors to the fringe
+        # Add successors to the fringe
         successors = get_successors(height_map, state_x, state_y)
         for succ_state in successors:
             succ_node = {"state": succ_state, "cost": node.get("cost") + 1}
