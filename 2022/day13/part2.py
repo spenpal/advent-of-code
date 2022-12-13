@@ -46,5 +46,3 @@ with open("input.txt") as f:
     sorted_packets = sorted(packets, key=cmp_to_key(partial(compare, i=0)))
     decoder_key = (sorted_packets.index([[2]]) + 1) * (sorted_packets.index([[6]]) + 1)
     print(decoder_key)
-
-# print(sum(right_order_idx))
