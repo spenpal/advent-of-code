@@ -21,11 +21,10 @@ def compare(left, right, i):
     left_type, right_type = type(left_v), type(right_v)
 
     if left_type == int == right_type:  # both are ints
-        if left_v > right_v:
-            return False
-        elif left_v < right_v:
-            return True
-        truth = compare(left, right, i + 1)
+        if left_v == right_v:
+            truth = compare(left, right, i + 1)
+        else:
+            return left_v < right_v
     elif left_type == list == right_type:  # both are lists
         truth = compare(left_v, right_v, 0)
     else:  # one is a list and the other is an int
