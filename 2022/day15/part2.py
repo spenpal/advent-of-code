@@ -91,4 +91,10 @@ x_coord = x_cover_ranges[0][1] + 1
 y_coord = y
 print(f"Tuning Frequency: {(x_coord * 4_000_000) + y_coord}")
 
-# overall running time of Part 2 is about a minute or so
+"""
+SOME NOTES:
+-> With 'python3', part 2 runs in under 60 seconds
+-> With 'pypy3', part 2 runs in under 6 seconds
+
+Almost 10x more efficient!!!
+"""
