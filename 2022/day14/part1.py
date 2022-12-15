@@ -26,23 +26,19 @@ def add_rocks(cave, r1, r2):
 def drop_sand(cave, pos):
     pos_x, pos_y = pos
     if pos_y == len(cave) - 1:  # have reached the abyss
-        return
+        return pos
 
     if cave[pos_y + 1][pos_x] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x] = "O"
         new_pos = (pos_x, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
     elif cave[pos_y + 1][pos_x - 1] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x - 1] = "O"
         new_pos = (pos_x - 1, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
     elif cave[pos_y + 1][pos_x + 1] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x + 1] = "O"
         new_pos = (pos_x + 1, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
+
+    return pos
 
 
 # MAIN
@@ -63,7 +59,8 @@ while all(space == "." for space in cave[-1]):
     cave[start[1]][start[0]] = "O"
     print_cave(cave)
 
-    drop_sand(cave, start)
+    final_pos = drop_sand(cave, start)
+    cave[final_pos[1]][final_pos[0]] = "O"
 
     print("\n")
 

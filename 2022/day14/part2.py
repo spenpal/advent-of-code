@@ -27,20 +27,16 @@ def drop_sand(cave, pos):
     pos_x, pos_y = pos
 
     if cave[pos_y + 1][pos_x] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x] = "O"
         new_pos = (pos_x, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
     elif cave[pos_y + 1][pos_x - 1] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x - 1] = "O"
         new_pos = (pos_x - 1, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
     elif cave[pos_y + 1][pos_x + 1] == ".":
-        cave[pos_y][pos_x] = "."
-        cave[pos_y + 1][pos_x + 1] = "O"
         new_pos = (pos_x + 1, pos_y + 1)
-        drop_sand(cave, new_pos)
+        return drop_sand(cave, new_pos)
+
+    return pos
 
 
 # MAIN
@@ -59,7 +55,7 @@ with open("input.txt") as f:
 sand_num = 0
 while cave[start[1]][start[0]] != "O":
     sand_num += 1
-    cave[start[1]][start[0]] = "O"
-    drop_sand(cave, start)
+    final_pos = drop_sand(cave, start)
+    cave[final_pos[1]][final_pos[0]] = "O"
 
 print("Units of Sand Before Filling Up Completely:", sand_num)
