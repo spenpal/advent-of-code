@@ -1,0 +1,14 @@
+[tool.pdm]
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "spenpal2000", email = "sanjeev.penupala@gmail.com"},
+]
+dependencies = [
+    "networkx>=2.8.8",
+]
+requires-python = ">=3.10"
+license = {text = "None"}
