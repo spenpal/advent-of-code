@@ -9,6 +9,8 @@ authors = [
 ]
 dependencies = [
     "networkx>=2.8.8",
+    "matplotlib>=3.6.2",
+    "ipykernel>=6.19.4",
 ]
 requires-python = ">=3.10"
 license = {text = "None"}
