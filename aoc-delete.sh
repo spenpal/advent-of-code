@@ -5,6 +5,6 @@ read num
 
 for (( i=$num; i<=25; i++ ))
 do
-    dir="2022/day$(printf "%02d" $i)"
+    dir="$(date +%Y)/day$(printf "%02d" $i)"
     rm -r $dir
 done
