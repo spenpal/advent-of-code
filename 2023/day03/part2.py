@@ -37,10 +37,7 @@ while r < len(schematic):
             c += 1
     r += 1
 
-gear_ratios = []
-for part_nums in gears.values():
-    if len(part_nums) == 2:
-        gear_ratio = part_nums[0] * part_nums[1]
-        gear_ratios.append(gear_ratio)
-
+gear_ratios = [
+    part_nums[0] * part_nums[1] for part_nums in gears.values() if len(part_nums) == 2
+]
 print(sum(gear_ratios))
