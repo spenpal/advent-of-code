@@ -8,12 +8,10 @@ dependencies = [
     "advent-of-code-data>=2.0.4",
 ]
 
-[tool.ruff]
-include = ["src", "tests"]
-
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    # MY RULES
     "D100",     # undocumented-public-module
     "D101",     # undocumented-public-class
     "D102",     # undocumented-public-method
@@ -21,15 +19,30 @@ ignore = [
     "INP001",   # implicit-namespace-package
     "PLR2004",  # magic-value-comparison
     "T201",     # print
+
+    # CONFLICTING LINTING & FORMAT RULES
+    "COM812",   # missing-trailing-comma
+    "COM819",   # prohibited-trailing-comma
+    "D206",     # indent-with-spaces
+    "D300",     # triple-single-quotes
+    "E111",     # indentation-with-invalid-multiple
+    "E114",     # indentation-with-invalid-multiple-comment
+    "E117",     # over-indented
+    "E501",     # line-too-long
+    "ISC001",   # single-line-implicit-string-concatenation
+    "ISC002",   # multi-line-implicit-string-concatenation
+    "Q000",     # bad-quotes-inline-string
+    "Q001",     # bad-quotes-multiline-string
+    "Q002",     # bad-quotes-docstring
+    "Q003",     # avoidable-escaped-quote
+    "W191",     # tab-indentation
 ]
 
-[tool.ruff.lint.per-file-ignores]
-# "tests/test.py" = ["ALL"]
+[tool.ruff.format]
+docstring-code-format = true
+skip-magic-trailing-comma = true
 
 [tool.pyright]
-include = ["src", "tests"]
-exclude = ["**/__pycache__"]
-
 reportAssignmentType = "none"
 reportOptionalMemberAccess = "none"
 reportPossiblyUnboundVariable = "none"
