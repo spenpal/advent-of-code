@@ -1,0 +1,35 @@
+[project]
+name = "advent-of-code"
+version = "1.0.0"
+description = "My Advent of Code solutions"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "advent-of-code-data>=2.0.4",
+]
+
+[tool.ruff]
+include = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D100",     # undocumented-public-module
+    "D101",     # undocumented-public-class
+    "D102",     # undocumented-public-method
+    "D103",     # undocumented-public-function
+    "INP001",   # implicit-namespace-package
+    "PLR2004",  # magic-value-comparison
+    "T201",     # print
+]
+
+[tool.ruff.lint.per-file-ignores]
+# "tests/test.py" = ["ALL"]
+
+[tool.pyright]
+include = ["src", "tests"]
+exclude = ["**/__pycache__"]
+
+reportAssignmentType = "none"
+reportOptionalMemberAccess = "none"
+reportPossiblyUnboundVariable = "none"

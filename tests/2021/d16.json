@@ -1,0 +1,77 @@
+[
+    {
+        "example": "D2FE28",
+        "part1": "6",
+        "part2": ""
+    },
+    {
+        "example": "38006F45291200",
+        "part1": "9",
+        "part2": ""
+    },
+    {
+        "example": "EE00D40C823060",
+        "part1": "14",
+        "part2": ""
+    },
+    {
+        "example": "8A004A801A8002F478",
+        "part1": "16",
+        "part2": ""
+    },
+    {
+        "example": "620080001611562C8802118E34",
+        "part1": "12",
+        "part2": ""
+    },
+    {
+        "example": "C0015000016115A2E0802F182340",
+        "part1": "23",
+        "part2": ""
+    },
+    {
+        "example": "A0016C880162017C3686B18A3D4780",
+        "part1": "31",
+        "part2": ""
+    },
+    {
+        "example": "C200B40A82",
+        "part1": "",
+        "part2": "3"
+    },
+    {
+        "example": "04005AC33890",
+        "part1": "",
+        "part2": "54"
+    },
+    {
+        "example": "880086C3E88112",
+        "part1": "",
+        "part2": "7"
+    },
+    {
+        "example": "CE00C43D881120",
+        "part1": "",
+        "part2": "9"
+    },
+    {
+        "example": "D8005AC2A8F0",
+        "part1": "",
+        "part2": "1"
+    },
+    {
+        "example": "F600BC2D8F",
+        "part1": "",
+        "part2": "0"
+    },
+    {
+        "example": "9C005AC2F8F0",
+        "part1": "",
+        "part2": "0"
+    },
+    {
+        "example": "9C0141080250320F1802104A08",
+        "part1": "",
+        "part2": "1"
+    }
+]

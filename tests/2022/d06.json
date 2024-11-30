@@ -1,0 +1,27 @@
+[
+    {
+        "example": "mjqjpqmgbljsphdztnvjfqwrcgsmlb",
+        "part1": "7",
+        "part2": "19"
+    },
+    {
+        "example": "bvwbjplbgvbhsrlpgdmjqwftvncz",
+        "part1": "5",
+        "part2": "23"
+    },
+    {
+        "example": "nppdvjthqldpwncqszvftbrmjlhg",
+        "part1": "6",
+        "part2": "23"
+    },
+    {
+        "example": "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg",
+        "part1": "10",
+        "part2": "29"
+    },
+    {
+        "example": "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw",
+        "part1": "11",
+        "part2": "26"
+    }
+]
