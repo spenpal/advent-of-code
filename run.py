@@ -20,9 +20,7 @@ def get_current_date_est() -> tuple[int, int]:
 def parse_args() -> Namespace:
     year, day = get_current_date_est()
 
-    parser = ArgumentParser(
-        description="Advent of Code Runner",
-    )
+    parser = ArgumentParser(description="Advent of Code Runner")
     parser.add_argument(
         "-y",
         "--year",
@@ -50,7 +48,7 @@ def parse_args() -> Namespace:
         type=int,
         choices=[1, 2],
         const=0,
-        help="Run tests on examples. Optionally, specify 1 or 2 for which part to test.",  # noqa: E501
+        help="Run tests on examples. Optionally, specify 1 or 2 for which part to test.",
     )
     action_group.add_argument(
         "-s",
@@ -115,12 +113,12 @@ def main() -> None:
             case 1:
                 print(f"Submitting Year {year}, Day {day}, Part 1...")
                 parsed_data = solution.parse(data)
-                output = solution.part1(parsed_data)
+                output = solution.part1(*parsed_data[1])
                 submit(output, part="a", day=day, year=year, reopen=False)
             case 2:
                 print(f"Submitting Year {year}, Day {day}, Part 2...")
                 parsed_data = solution.parse(data)
-                output = solution.part2(parsed_data)
+                output = solution.part2(*parsed_data[2])
                 submit(output, part="b", day=day, year=year, reopen=False)
     else:
         start_parse = perf_counter()
@@ -131,14 +129,14 @@ def main() -> None:
         part1_result = solution.part1(*parsed_data[1])
         end_part1 = perf_counter()
         print(
-            f"Part 1:{"\n" if "\n" in str(part1_result) else " "}{part1_result} (Time: {(end_part1 - start_part1) + (end_parse - start_parse):.5f}s)",  # noqa: E501
+            f"Part 1:{'\n' if '\n' in str(part1_result) else ' '}{part1_result} (Time: {(end_part1 - start_part1) + (end_parse - start_parse):.5f}s)"
         )
 
         start_part2 = perf_counter()
         part2_result = solution.part2(*parsed_data[2])
         end_part2 = perf_counter()
         print(
-            f"Part 2:{"\n" if "\n" in str(part2_result) else " "}{part2_result} (Time: {(end_part2 - start_part2) + (end_parse - start_parse):.5f}s)",  # noqa: E501
+            f"Part 2:{'\n' if '\n' in str(part2_result) else ' '}{part2_result} (Time: {(end_part2 - start_part2) + (end_parse - start_parse):.5f}s)"
         )
 
 
