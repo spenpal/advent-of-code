@@ -44,14 +44,14 @@ def parse_args() -> Namespace:
         choices=range(1, 26),
         nargs="+",
         default=day if is_aoc_active else -1,
-        help="Day(s) of the puzzles. Provide a single day (e.g., '-d 5') or a range (e.g., '-d 1 5'). (default: current day, if AOC is active)",  # noqa: E501
+        help="Day(s) of the puzzles. Provide a single day (e.g., '-d 5') or a range (e.g., '-d 1 5'). (default: current day, if AOC is active)",
         metavar="{1-25}",
     )
 
     args = parser.parse_args()
     if args.days == -1:
         parser.error(
-            "The -d/--days flag is required outside the Advent of Code active period (Dec 1 - Dec 25). "  # noqa: E501
+            "The -d/--days flag is required outside the Advent of Code active period (Dec 1 - Dec 25). "
             "Please specify a day using '-d DAY' or a range with '-d START END'.",
         )
     if len(args.days) > 2:
