@@ -43,7 +43,7 @@ def parse_args() -> Namespace:
         type=int,
         choices=range(1, 26),
         nargs="+",
-        default=day if is_aoc_active else -1,
+        default=[day] if is_aoc_active else [-1],
         help="Day(s) of the puzzles. Provide a single day (e.g., '-d 5') or a range (e.g., '-d 1 5'). (default: current day, if AOC is active)",
         metavar="{1-25}",
     )
@@ -52,11 +52,11 @@ def parse_args() -> Namespace:
     if args.days == -1:
         parser.error(
             "The -d/--days flag is required outside the Advent of Code active period (Dec 1 - Dec 25). "
-            "Please specify a day using '-d DAY' or a range with '-d START END'.",
+            "Please specify a day using '-d DAY' or a range with '-d START END'."
         )
     if len(args.days) > 2:
         parser.error(
-            "The -d/--days flag accepts only 1 or 2 values (a single day or a range).",
+            "The -d/--days flag accepts only 1 or 2 values (a single day or a range)."
         )
 
     return args
