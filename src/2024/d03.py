@@ -2,6 +2,7 @@ import re
 
 
 def parse(data: str) -> dict[int, tuple]:
+    data = "".join(line.strip() for line in data.splitlines())
     return {1: (data,), 2: (data,)}
 
 
@@ -11,11 +12,5 @@ def part1(memory: str) -> int:
 
 
 def part2(memory: str) -> int:
-    memory_segments = re.split(r"(don't\(\)|do\(\))", memory)
-    return part1(memory_segments[0]) + sum(
-        part1(segment)
-        for condition, segment in zip(
-            memory_segments[1::2], memory_segments[2::2], strict=False
-        )
-        if condition == "do()"
-    )
+    memory_segments = (do.split("don't()")[0] for do in memory.split("do()"))
+    return part1("".join(memory_segments))
