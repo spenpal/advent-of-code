@@ -2,7 +2,6 @@ import re
 
 
 def parse(data: str) -> dict[int, tuple]:
-    data = data.strip()
     return {1: (data,), 2: (data,)}
 
 
