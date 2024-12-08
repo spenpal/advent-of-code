@@ -1,4 +1,42 @@
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
+from typing import Generic, TypeVar
+
+T = TypeVar("T")
+
+
+class OrderedSet(Generic[T]):
+    def __init__(self) -> None:
+        self._data: dict[T, None] = {}
+
+    def add(self, value: T) -> None:
+        self._data[value] = None
+
+    def discard(self, value: T) -> None:
+        self._data.pop(value, None)
+
+    def __contains__(self, value: T) -> bool:
+        return value in self._data
+
+    def __iter__(self) -> Iterator[T]:
+        return iter(self._data.keys())
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def clear(self) -> None:
+        self._data.clear()
+
+    def update(self, *values: T) -> None:
+        for value in values:
+            self.add(value)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, OrderedSet):
+            return False
+        return list(self._data.keys()) == list(other._data.keys())
+
+    def __repr__(self) -> str:
+        return f"OrderedSet({list(self._data.keys())})"
 
 
 class WordSearch:
