@@ -1,4 +1,5 @@
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterable, Iterator, Sequence
+from itertools import chain, zip_longest
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
@@ -102,3 +103,9 @@ class WordSearch:
 
 def manhattan_distance(p1: tuple[int, int], p2: tuple[int, int]) -> int:
     return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+
+
+def merge(iterable1: Iterable[T], iterable2: Iterable[T]) -> list[T]:
+    """Alternates elements from two iterables into a single list, appending remaining elements from the longer iterable."""
+    merged_iterable = chain.from_iterable(zip_longest(iterable1, iterable2))
+    return [item for item in merged_iterable if item is not None]
