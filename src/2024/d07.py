@@ -1,55 +1,61 @@
-from itertools import product
-
-from src.utils import merge
+from collections import deque
 
 
 def parse(data: str) -> dict[int, tuple]:
     data = [line.strip().split(": ") for line in data.strip().splitlines()]
-    data = [(tuple(numbers.split()), target) for target, numbers in data]
+    data = [(tuple(map(int, nums.split())), int(target)) for target, nums in data]
     return {1: (data,), 2: (data,)}
 
 
-def calculate(numbers: tuple[str, ...], ops: tuple[str, ...], target: int) -> int:
-    expr = merge(numbers, ops)
-    stack = expr[::-1]
-
-    while len(stack) > 1:
-        left, op, right = stack.pop(), stack.pop(), stack.pop()
-
-        match op:
-            case "+":
-                result = int(left) + int(right)
-            case "*":
-                result = int(left) * int(right)
-            case "||":
-                result = int(left + right)
-            case _:
-                msg = f"Unsupported operator: {op}"
-                raise ValueError(msg)
-
-        if result > target:
-            return -1
-
-        stack.append(str(result))
-
-    return int(stack.pop())
-
-
-def part1(equations: list[tuple[tuple[str, ...], str]]) -> int:
+def part1(equations: list[tuple[tuple[int, ...], int]]) -> int:
     total = 0
-    for numbers, target in equations:
-        target = int(target)
-        op_perms = product(["+", "*"], repeat=len(numbers) - 1)
-        if any(calculate(numbers, ops, target) == target for ops in op_perms):
-            total += target
+
+    for nums, target in equations:
+        queue = deque([(nums[0], nums[1:])])
+        while queue:
+            res, remainder_nums = queue.popleft()
+            if not remainder_nums:
+                if res == target:
+                    total += target
+                    break
+                continue
+
+            next_num = remainder_nums[0]
+            add, mul = res + next_num, res * next_num
+
+            if add <= target:
+                queue.append((add, remainder_nums[1:]))
+            if mul <= target:
+                queue.append((mul, remainder_nums[1:]))
+
     return total
 
 
-def part2(equations: list[tuple[tuple[str, ...], str]]) -> int:
+def part2(equations: list[tuple[tuple[int, ...], int]]) -> int:
     total = 0
-    for numbers, target in equations:
-        target = int(target)
-        op_perms = product(["+", "*", "||"], repeat=len(numbers) - 1)
-        if any(calculate(numbers, ops, target) == target for ops in op_perms):
-            total += target
+
+    for nums, target in equations:
+        queue = deque([(nums[0], nums[1:])])
+        while queue:
+            res, remainder_nums = queue.popleft()
+            if not remainder_nums:
+                if res == target:
+                    total += target
+                    break
+                continue
+
+            next_num = remainder_nums[0]
+            add, mul, concat = (
+                res + next_num,
+                res * next_num,
+                int(str(res) + str(next_num)),
+            )
+
+            if add <= target:
+                queue.append((add, remainder_nums[1:]))
+            if mul <= target:
+                queue.append((mul, remainder_nums[1:]))
+            if concat <= target:
+                queue.append((concat, remainder_nums[1:]))
+
     return total
