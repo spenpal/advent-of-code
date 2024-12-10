@@ -45,14 +45,11 @@ def part2(antennas: defaultdict[str, set[Pair]], grid_dims: Pair) -> int:
             antinode_1 = pos_1[0] - slope[0], pos_1[1] - slope[1]
             antinode_2 = pos_1[0] + slope[0], pos_1[1] + slope[1]
 
-            antinodes_1, antinodes_2 = set(), set()
             while not out_of_bounds(*grid_dims, *antinode_1):
-                antinodes_1.add(antinode_1)
+                antinodes.add(antinode_1)
                 antinode_1 = antinode_1[0] - slope[0], antinode_1[1] - slope[1]
             while not out_of_bounds(*grid_dims, *antinode_2):
-                antinodes_2.add(antinode_2)
+                antinodes.add(antinode_2)
                 antinode_2 = antinode_2[0] + slope[0], antinode_2[1] + slope[1]
-
-            antinodes.update(antinodes_1 | antinodes_2)
 
     return len(antinodes | set.union(*antennas.values()))
