@@ -1,6 +1,8 @@
+from src.types import Pair
+
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
-Path = list[tuple[tuple[int, int], tuple[int, int]]]
+Path = list[tuple[Pair, Pair]]
 
 
 def parse(data: str) -> dict[int, tuple]:
@@ -8,13 +10,11 @@ def parse(data: str) -> dict[int, tuple]:
     return {1: (data,), 2: (data,)}
 
 
-def find_path(
-    grid: list[list[str]], pos: tuple[int, int], direction: tuple[int, int]
-) -> Path | None:
+def find_path(grid: list[list[str]], pos: Pair, direction: Pair) -> Path | None:
     def valid_pos(x: int, y: int) -> bool:
         return 0 <= x < len(grid) and 0 <= y < len(grid[0])
 
-    def rotate(direction: tuple[int, int]) -> tuple[int, int]:
+    def rotate(direction: Pair) -> Pair:
         return DIRECTIONS[(DIRECTIONS.index(direction) + 1) % len(DIRECTIONS)]
 
     path, visited = [], set()
@@ -39,7 +39,7 @@ def find_path(
     return path
 
 
-def get_start_pos(grid: list[list[str]]) -> tuple[int, int] | None:
+def get_start_pos(grid: list[list[str]]) -> Pair | None:
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == "^":
