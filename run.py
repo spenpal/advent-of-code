@@ -1,5 +1,6 @@
 import importlib
 import sys
+import traceback
 from argparse import ArgumentParser, Namespace
 from datetime import datetime
 from time import perf_counter
@@ -66,8 +67,10 @@ def load_solution(year: int, day: int) -> ModuleType:
     module_path = f"src.{year}.d{day:02}"
     try:
         return importlib.import_module(module_path)
-    except ModuleNotFoundError:
-        print(f"Solution file for year {year}, day {day} not found.")
+    except ModuleNotFoundError as e:
+        print(f"An error occurred while importing {module_path}: {e}")
+        print("Detailed traceback:")
+        traceback.print_exc()
         sys.exit(1)
 
 
