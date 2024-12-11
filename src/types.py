@@ -1,6 +1,6 @@
-from typing import TypeVar
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
-Pair = tuple[int, int]
+Pair = tuple[Any, Any]
 Pairs = list[Pair]
