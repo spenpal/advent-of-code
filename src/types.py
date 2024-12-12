@@ -1,9 +1,8 @@
-from collections.abc import Sequence
-from typing import Any, TypeVar
+from typing import TypeVar
 
 T = TypeVar("T")
 
-Pair = tuple[Any, Any]
+Pair = tuple[T, T]
 Pairs = list[Pair]
 
-Grid = Sequence[Sequence[T]]
+Grid = list[list[T]]
