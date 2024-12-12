@@ -22,6 +22,7 @@ def part1(disk_map: list[int | None]) -> int:
 
 def part2(disk_map: list[int | None]) -> int:
     def find_free(end: int, count: int) -> int:
+        # TODO: Find way to make this more efficient than O(n)
         free_space = 0
         for i in range(end):
             if disk_map[i] is not None:
