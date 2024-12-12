@@ -1,3 +1,4 @@
+from src.types import Grid
 from src.utils import WordSearch
 
 
@@ -6,7 +7,7 @@ def parse(data: str) -> dict[int, tuple]:
     return {1: (data,), 2: (data,)}
 
 
-def part1(puzzle: list[list[str]]) -> int:
+def part1(puzzle: Grid[str]) -> int:
     ws = WordSearch(puzzle)
     return len(ws.search("XMAS", find_all=True))
 
@@ -18,7 +19,7 @@ class XWordSearch(WordSearch):
             (self.direction["DL"], self.direction["UR"]),
         ]
         half_len = len(target_word) // 2
-        x_positions: list[list[WordSearch.Position]] = []
+        x_positions: Grid[WordSearch.Position] = []
 
         for left_dir, right_dir in direction_pairs:
             positions_left = [

@@ -1,4 +1,4 @@
-from src.types import Pair
+from src.types import Grid, Pair
 
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
@@ -10,7 +10,7 @@ def parse(data: str) -> dict[int, tuple]:
     return {1: (data,), 2: (data,)}
 
 
-def find_path(grid: list[list[str]], pos: Pair, direction: Pair) -> Path | None:
+def find_path(grid: Grid[str], pos: Pair, direction: Pair) -> Path | None:
     def valid_pos(x: int, y: int) -> bool:
         return 0 <= x < len(grid) and 0 <= y < len(grid[0])
 
@@ -39,7 +39,7 @@ def find_path(grid: list[list[str]], pos: Pair, direction: Pair) -> Path | None:
     return path
 
 
-def get_start_pos(grid: list[list[str]]) -> Pair | None:
+def get_start_pos(grid: Grid[str]) -> Pair | None:
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == "^":
@@ -47,7 +47,7 @@ def get_start_pos(grid: list[list[str]]) -> Pair | None:
     return None
 
 
-def part1(grid: list[list[str]]) -> int:
+def part1(grid: Grid[str]) -> int:
     pos = get_start_pos(grid)
     if not pos:
         return -1
@@ -59,7 +59,7 @@ def part1(grid: list[list[str]]) -> int:
     return len({pos for pos, _ in path})
 
 
-def part2(grid: list[list[str]]) -> int:
+def part2(grid: Grid[str]) -> int:
     pos = get_start_pos(grid)
     if not pos:
         return -1

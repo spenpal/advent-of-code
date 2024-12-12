@@ -1,16 +1,16 @@
 from collections.abc import Iterable, Sequence
 from itertools import chain, zip_longest
 
-from .types import T
+from .types import Grid, Pair, T
 
 
 class WordSearch:
-    Position = tuple[int, int]
+    Position = Pair[int]
     Match = list[Position]
     Matches = list[Match]
 
     def __init__(
-        self, grid: Sequence[Sequence[str]] | Sequence[str], case_sensitive: bool = True
+        self, grid: Grid[str] | Sequence[str], case_sensitive: bool = True
     ) -> None:
         if not all(len(row) == len(grid[0]) for row in grid):
             msg = "All rows in the grid must have the same length."
@@ -65,7 +65,7 @@ class WordSearch:
         return matches
 
 
-def manhattan_distance(p1: tuple[int, int], p2: tuple[int, int]) -> int:
+def manhattan_distance(p1: Pair[int], p2: Pair[int]) -> int:
     return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
 
 
