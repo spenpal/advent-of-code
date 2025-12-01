@@ -3,10 +3,7 @@ def parse(data: str) -> dict[int, tuple]:
     trans_t_map = list(zip(*t_map, strict=False))
     visible_trees = ((len(t_map) - 2) + len(t_map[0])) * 2
 
-    return {
-        1: (t_map, trans_t_map, visible_trees),
-        2: (t_map, trans_t_map, visible_trees),
-    }
+    return {1: (t_map, trans_t_map, visible_trees), 2: (t_map, trans_t_map, visible_trees)}
 
 
 def visible(t_map, trans_t_map, i, j):
@@ -16,10 +13,7 @@ def visible(t_map, trans_t_map, i, j):
     max_right_tree = max(map(int, t_map[i][j + 1 :]))
     tree_h = int(t_map[i][j])
 
-    return any(
-        max_tree < tree_h
-        for max_tree in (max_up_tree, max_down_tree, max_left_tree, max_right_tree)
-    )
+    return any(max_tree < tree_h for max_tree in (max_up_tree, max_down_tree, max_left_tree, max_right_tree))
 
 
 def part1(t_map, trans_t_map, visible_trees):
@@ -30,10 +24,7 @@ def part1(t_map, trans_t_map, visible_trees):
         max_right_tree = max(map(int, t_map[i][j + 1 :]))
         tree_h = int(t_map[i][j])
 
-        return any(
-            max_tree < tree_h
-            for max_tree in (max_up_tree, max_down_tree, max_left_tree, max_right_tree)
-        )
+        return any(max_tree < tree_h for max_tree in (max_up_tree, max_down_tree, max_left_tree, max_right_tree))
 
     for i in range(1, len(t_map) - 1):
         for j in range(1, len(t_map[0]) - 1):
@@ -59,7 +50,5 @@ def part2(t_map, trans_t_map, visible_trees):
 
     trans_t_map = ["".join(tree_row) for tree_row in zip(*t_map, strict=False)]
     return max(
-        scenic_score(t_map, trans_t_map, i, j)
-        for i in range(1, len(t_map) - 1)
-        for j in range(1, len(t_map[0]) - 1)
+        scenic_score(t_map, trans_t_map, i, j) for i in range(1, len(t_map) - 1) for j in range(1, len(t_map[0]) - 1)
     )

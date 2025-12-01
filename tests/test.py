@@ -4,12 +4,7 @@ from pathlib import Path
 from time import perf_counter
 
 
-def run_tests(
-    test_file_path: str,
-    part: int,
-    parse_f: Callable[[str], dict[int, tuple]],
-    part_f: Callable,
-) -> None:
+def run_tests(test_file_path: str, part: int, parse_f: Callable[[str], dict[int, tuple]], part_f: Callable) -> None:
     with Path(test_file_path).open() as file:
         test_cases = json.load(file)
 
@@ -36,11 +31,8 @@ def run_tests(
             status = "FAILED"
             status_color = "\033[91m"  # Red
 
-        print(
-            f"{status_color}#{i:02} - {status}\033[0m".ljust(35),
-            f"Time: {(end_time - start_time):.5f}s".rjust(20),
-        )
+        print(f"{status_color}#{i:02} - {status}\033[0m".ljust(35), f"Time: {(end_time - start_time):.5f}s".rjust(20))
 
         if status == "FAILED":
-            print(f"  └── Output:{"\n" if "\n" in str(output) else " "}{output}")
+            print(f"  └── Output:{'\n' if '\n' in str(output) else ' '}{output}")
             print(f"  └── Expected: {answer}")

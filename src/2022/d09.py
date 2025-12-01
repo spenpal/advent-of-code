@@ -50,10 +50,7 @@ def part2(data):
             if not gap(knots[i - 1], knots[i]):
                 break
 
-            x_diff, y_diff = (
-                (knots[i][0] - knots[i - 1][0]),
-                (knots[i][1] - knots[i - 1][1]),
-            )
+            x_diff, y_diff = ((knots[i][0] - knots[i - 1][0]), (knots[i][1] - knots[i - 1][1]))
             match (x_diff, y_diff):
                 case (-2, 2):  # up-left
                     knots[i][0], knots[i][1] = knots[i - 1][0] - 1, knots[i - 1][1] + 1

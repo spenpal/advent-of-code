@@ -1,7 +1,7 @@
 from collections import defaultdict
 from itertools import combinations
 
-from src.types import Pair
+from src.type_defs import Pair
 from src.utils import out_of_bounds
 
 
@@ -28,9 +28,7 @@ def part1(antennas: defaultdict[str, set[Pair]], grid_dims: Pair) -> int:
             antinode_2 = pos_2[0] + slope[0], pos_2[1] + slope[1]
 
             antinodes.update(
-                antinode
-                for antinode in (antinode_1, antinode_2)
-                if not out_of_bounds(*grid_dims, *antinode)
+                antinode for antinode in (antinode_1, antinode_2) if not out_of_bounds(*grid_dims, *antinode)
             )
 
     return len(antinodes)

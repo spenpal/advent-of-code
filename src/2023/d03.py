@@ -45,11 +45,7 @@ def part1(schematic):
                     c += 1
                 last_digit_pos = c - 1
                 if check_part_number(schematic, r, first_digit_pos, last_digit_pos):
-                    part_nums.append(
-                        int(
-                            "".join(schematic[r][first_digit_pos : last_digit_pos + 1]),
-                        ),
-                    )
+                    part_nums.append(int("".join(schematic[r][first_digit_pos : last_digit_pos + 1])))
                 c = last_digit_pos + 1
             else:
                 c += 1
@@ -87,9 +83,5 @@ def part2(schematic):
                 c += 1
         r += 1
 
-    gear_ratios = [
-        part_nums[0] * part_nums[1]
-        for part_nums in gears.values()
-        if len(part_nums) == 2
-    ]
+    gear_ratios = [part_nums[0] * part_nums[1] for part_nums in gears.values() if len(part_nums) == 2]
     return sum(gear_ratios)

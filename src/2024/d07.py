@@ -45,11 +45,7 @@ def part2(equations: list[tuple[tuple[int, ...], int]]) -> int:
                 continue
 
             next_num = remainder_nums[0]
-            add, mul, concat = (
-                res + next_num,
-                res * next_num,
-                int(str(res) + str(next_num)),
-            )
+            add, mul, concat = (res + next_num, res * next_num, int(str(res) + str(next_num)))
 
             if add <= target:
                 queue.append((add, remainder_nums[1:]))

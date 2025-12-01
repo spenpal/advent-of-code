@@ -48,16 +48,8 @@ def operator(packet):
 
 
 def packet_parser(packet):
-    version, packet_type_id, packet = (
-        int(packet[:3], 2),
-        int(packet[3:6], 2),
-        packet[6:],
-    )
-    packet_info = {
-        "version": version,
-        "versionSum": version,
-        "packet_type_id": packet_type_id,
-    }
+    version, packet_type_id, packet = (int(packet[:3], 2), int(packet[3:6], 2), packet[6:])
+    packet_info = {"version": version, "versionSum": version, "packet_type_id": packet_type_id}
 
     if packet_type_id == 4:
         value, packet = literal_value(packet)
@@ -82,18 +74,14 @@ def packet_parser(packet):
             case 7:
                 packet_info["value"] = 1 if values[0] == values[1] else 0
 
-        packet_info["versionSum"] += sum(
-            packet_info.get("versionSum", 0) for packet_info in _packet_infos
-        )
+        packet_info["versionSum"] += sum(packet_info.get("versionSum", 0) for packet_info in _packet_infos)
 
     return packet_info, packet
 
 
 def part1(packet):
     packet_infos = []
-    while packet and set(packet) != set(
-        "0",
-    ):  # stop when packet is empty or there are extra 0 bits
+    while packet and set(packet) != set("0"):  # stop when packet is empty or there are extra 0 bits
         packet_info, packet = packet_parser(packet)
         packet_infos.append(packet_info)
     return sum(packet_info.get("versionSum", 0) for packet_info in packet_infos)

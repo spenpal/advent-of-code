@@ -6,10 +6,7 @@ def parse(data: str) -> dict[int, tuple]:
     steps = []
     for line in data.splitlines():
         state, coords = line.split()
-        match = re.search(
-            r"x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+)",
-            coords,
-        )
+        match = re.search(r"x=(-?\d+)..(-?\d+),y=(-?\d+)..(-?\d+),z=(-?\d+)..(-?\d+)", coords)
         x_min, x_max = int(match[1]), int(match[2])
         y_min, y_max = int(match[3]), int(match[4])
         z_min, z_max = int(match[5]), int(match[6])
@@ -68,6 +65,4 @@ def part2(steps):
 
         reactor.extend(new_cores)
 
-    return sum(
-        (1 if state == "on" else -1) * total_cubes(core) for state, core in reactor
-    )
+    return sum((1 if state == "on" else -1) * total_cubes(core) for state, core in reactor)

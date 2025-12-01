@@ -44,9 +44,7 @@ def part2(data):
             flag += 1
 
             sprite_position = (x - 1, x, x + 1)
-            crt[cycle_num - 1] += (
-                "#" if ((cycle_num - 1) % 40) in sprite_position else "."
-            )
+            crt[cycle_num - 1] += "#" if ((cycle_num - 1) % 40) in sprite_position else "."
 
             if (match := ADDX.match(line)) and flag == 2:
                 add_num = int(match[1])

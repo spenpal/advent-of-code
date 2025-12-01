@@ -18,7 +18,7 @@ def part1(fishes):
 
 
 def part2(fishes):
-    timers = Counter({timer: 0 for timer in range(10)})
+    timers = Counter(dict.fromkeys(range(10), 0))
     fishes = Counter(fishes)
     fishes.update(timers)
 

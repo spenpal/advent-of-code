@@ -1,4 +1,4 @@
-from src.types import Grid
+from src.type_defs import Grid
 from src.utils import WordSearch
 
 
@@ -14,44 +14,26 @@ def part1(puzzle: Grid[str]) -> int:
 
 class XWordSearch(WordSearch):
     def _get_matches(self, row: int, col: int, target_word: str) -> WordSearch.Matches:
-        direction_pairs = [
-            (self.direction["UL"], self.direction["DR"]),
-            (self.direction["DL"], self.direction["UR"]),
-        ]
+        direction_pairs = [(self.direction["UL"], self.direction["DR"]), (self.direction["DL"], self.direction["UR"])]
         half_len = len(target_word) // 2
         x_positions: Grid[WordSearch.Position] = []
 
         for left_dir, right_dir in direction_pairs:
-            positions_left = [
-                (row + left_dir[0] * i, col + left_dir[1] * i)
-                for i in range(1, half_len + 1)
-            ]
-            positions_right = [
-                (row + right_dir[0] * i, col + right_dir[1] * i)
-                for i in range(1, half_len + 1)
-            ]
+            positions_left = [(row + left_dir[0] * i, col + left_dir[1] * i) for i in range(1, half_len + 1)]
+            positions_right = [(row + right_dir[0] * i, col + right_dir[1] * i) for i in range(1, half_len + 1)]
             positions = [*positions_left[::-1], (row, col), *positions_right]
             x_positions.append(positions)
 
-        word1 = "".join(
-            self.grid[r][c] if self._valid_position(r, c) else ""
-            for r, c in x_positions[0]
-        )
-        word2 = "".join(
-            self.grid[r][c] if self._valid_position(r, c) else ""
-            for r, c in x_positions[1]
-        )
+        word1 = "".join(self.grid[r][c] if self._valid_position(r, c) else "" for r, c in x_positions[0])
+        word2 = "".join(self.grid[r][c] if self._valid_position(r, c) else "" for r, c in x_positions[1])
 
         return (
             [sorted(set(x_positions[0] + x_positions[1]))]
-            if target_word in [word1, word1[::-1]]
-            and target_word in [word2, word2[::-1]]
+            if target_word in [word1, word1[::-1]] and target_word in [word2, word2[::-1]]
             else []
         )
 
-    def search(
-        self, word: str, find_all: bool = False
-    ) -> WordSearch.Match | WordSearch.Matches:
+    def search(self, word: str, find_all: bool = False) -> WordSearch.Match | WordSearch.Matches:
         if not word:
             return []
         if len(word) % 2 != 1:
@@ -64,7 +46,7 @@ class XWordSearch(WordSearch):
             for col in range(self.cols):
                 if self.grid[row][col] == target_word[len(target_word) // 2]:
                     matches.extend(self._get_matches(row, col, target_word))
-                    if not find_all and len(matches):
+                    if not find_all and matches:
                         return matches[0]
         return matches
 

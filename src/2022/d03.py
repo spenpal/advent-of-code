@@ -1,9 +1,7 @@
 import string
 from itertools import islice
 
-priority = {
-    let: p + 1 for p, let in enumerate(string.ascii_lowercase + string.ascii_uppercase)
-}
+priority = {let: p + 1 for p, let in enumerate(string.ascii_lowercase + string.ascii_uppercase)}
 
 
 def parse(data: str) -> dict[int, tuple]:
@@ -25,8 +23,6 @@ def part2(data):
     priority_sum = 0
     while elf_group := list(islice(data, 3)):
         print(elf_group)
-        common_item_type = list(
-            set.intersection(*[set(rucksack.strip()) for rucksack in elf_group]),
-        )[0]
+        common_item_type = list(set.intersection(*[set(rucksack.strip()) for rucksack in elf_group]))[0]
         priority_sum += priority[common_item_type]
     return priority_sum

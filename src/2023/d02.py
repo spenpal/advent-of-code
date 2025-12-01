@@ -8,11 +8,7 @@ def parse(data: str) -> dict[int, tuple]:
 
 
 def check(cubes):
-    max_cube_count = {
-        "red": 12,
-        "green": 13,
-        "blue": 14,
-    }
+    max_cube_count = {"red": 12, "green": 13, "blue": 14}
 
     for color, count in cubes.items():
         if count > max_cube_count[color]:

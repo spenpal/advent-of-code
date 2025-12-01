@@ -17,12 +17,7 @@ def elevation(letter):
 def get_successors(height_map, state_x, state_y):
     curr_elevation = elevation(height_map[state_x][state_y])
 
-    all_successors = [
-        (state_x, state_y + 1),
-        (state_x, state_y - 1),
-        (state_x + 1, state_y),
-        (state_x - 1, state_y),
-    ]
+    all_successors = [(state_x, state_y + 1), (state_x, state_y - 1), (state_x + 1, state_y), (state_x - 1, state_y)]
     valid_successors = [
         succ
         for succ in all_successors

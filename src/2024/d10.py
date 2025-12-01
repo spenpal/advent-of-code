@@ -1,7 +1,7 @@
 from collections import deque
 from collections.abc import Generator
 
-from src.types import Grid, Pair
+from src.type_defs import Grid, Pair
 from src.utils import out_of_bounds
 
 
@@ -11,12 +11,7 @@ def parse(data: str) -> dict[int, tuple]:
 
 
 def get_trailheads(top_map: Grid) -> list[Pair]:
-    return [
-        (row, col)
-        for row in range(len(top_map))
-        for col in range(len(top_map[row]))
-        if top_map[row][col] == 0
-    ]
+    return [(row, col) for row in range(len(top_map)) for col in range(len(top_map[row])) if top_map[row][col] == 0]
 
 
 def find_trailends(trailhead: Pair, top_map: Grid) -> list[Pair]:

@@ -49,7 +49,7 @@ def parse_args() -> Namespace:
         type=int,
         choices=[1, 2],
         const=0,
-        help="Run tests on examples. Optionally, specify 1 or 2 for which part to test.",
+        help=("Run tests on examples. Optionally, specify 1 or 2 for which part to test."),
     )
     action_group.add_argument(
         "-s",
@@ -85,32 +85,12 @@ def main() -> None:
         print(f"Testing Year {year}, Day {day}...")
         match args.test:
             case 0:
-                run_tests(
-                    test_file_path,
-                    part=1,
-                    parse_f=solution.parse,
-                    part_f=solution.part1,
-                )
-                run_tests(
-                    test_file_path,
-                    part=2,
-                    parse_f=solution.parse,
-                    part_f=solution.part2,
-                )
+                run_tests(test_file_path, part=1, parse_f=solution.parse, part_f=solution.part1)
+                run_tests(test_file_path, part=2, parse_f=solution.parse, part_f=solution.part2)
             case 1:
-                run_tests(
-                    test_file_path,
-                    part=1,
-                    parse_f=solution.parse,
-                    part_f=solution.part1,
-                )
+                run_tests(test_file_path, part=1, parse_f=solution.parse, part_f=solution.part1)
             case 2:
-                run_tests(
-                    test_file_path,
-                    part=2,
-                    parse_f=solution.parse,
-                    part_f=solution.part2,
-                )
+                run_tests(test_file_path, part=2, parse_f=solution.parse, part_f=solution.part2)
     elif args.submit:
         match args.submit[0]:
             case 1:
@@ -131,16 +111,16 @@ def main() -> None:
         start_part1 = perf_counter()
         part1_result = solution.part1(*parsed_data[1])
         end_part1 = perf_counter()
-        print(
-            f"Part 1:{'\n' if '\n' in str(part1_result) else ' '}{part1_result} (Time: {(end_part1 - start_part1) + (end_parse - start_parse):.5f}s)"
-        )
+        part1_time = (end_part1 - start_part1) + (end_parse - start_parse)
+        part1_sep = "\n" if "\n" in str(part1_result) else " "
+        print(f"Part 1:{part1_sep}{part1_result} (Time: {part1_time:.5f}s)")
 
         start_part2 = perf_counter()
         part2_result = solution.part2(*parsed_data[2])
         end_part2 = perf_counter()
-        print(
-            f"Part 2:{'\n' if '\n' in str(part2_result) else ' '}{part2_result} (Time: {(end_part2 - start_part2) + (end_parse - start_parse):.5f}s)"
-        )
+        part2_time = (end_part2 - start_part2) + (end_parse - start_parse)
+        part2_sep = "\n" if "\n" in str(part2_result) else " "
+        print(f"Part 2:{part2_sep}{part2_result} (Time: {part2_time:.5f}s)")
 
 
 if __name__ == "__main__":

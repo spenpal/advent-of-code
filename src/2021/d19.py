@@ -2,9 +2,7 @@ import re
 from itertools import permutations
 
 rotations = permutations(["x", "y", "z", "-x", "-y", "-z"], 3)
-rotations = [
-    rotation for rotation in rotations if len(set(axis[-1] for axis in rotation)) == 3
-]
+rotations = [rotation for rotation in rotations if len(set(axis[-1] for axis in rotation)) == 3]
 
 
 def parse(data: str) -> dict[int, tuple]:
@@ -29,9 +27,7 @@ def manhattan_distance(c1, c2):
 
 
 def convertCoords(loc, coords):
-    return [
-        tuple(x1 + x2 for x1, x2 in zip(loc, coord, strict=False)) for coord in coords
-    ]
+    return [tuple(x1 + x2 for x1, x2 in zip(loc, coord, strict=False)) for coord in coords]
 
 
 def slopes_and_distances(coords):
@@ -67,10 +63,7 @@ def find_overlap(s1_sads, s2_sads):
 
 def rotate(coords):
     for rotation in rotations:
-        yield [
-            (eval(rotation[0]), eval(rotation[1]), eval(rotation[2]))
-            for x, y, z in coords
-        ]
+        yield [(eval(rotation[0]), eval(rotation[1]), eval(rotation[2])) for x, y, z in coords]
 
 
 def assemble_map(beacons, scanner_locs, scanners):

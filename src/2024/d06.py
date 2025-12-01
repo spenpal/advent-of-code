@@ -1,4 +1,4 @@
-from src.types import Grid, Pair
+from src.type_defs import Grid, Pair
 
 DIRECTIONS = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 

@@ -6,7 +6,17 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "advent-of-code-data>=2.0.4",
+    "httpx>=0.28.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.0",
+    "ruff>=0.14.7",
+]
+
+[tool.ruff]
+line-length = 120
 
 [tool.ruff.lint]
 select = ["ALL"]
@@ -27,28 +37,23 @@ ignore = [
     "T201",     # print
     "TD002",    # missing-todo-author
     "TD003",    # missing-todo-link
-
-    # CONFLICTING LINTING & FORMAT RULES
-    "COM812",   # missing-trailing-comma
-    "COM819",   # prohibited-trailing-comma
-    "D206",     # indent-with-spaces
-    "D300",     # triple-single-quotes
-    "E111",     # indentation-with-invalid-multiple
-    "E114",     # indentation-with-invalid-multiple-comment
-    "E117",     # over-indented
-    "E501",     # line-too-long
-    "ISC001",   # single-line-implicit-string-concatenation
-    "ISC002",   # multi-line-implicit-string-concatenation
-    "Q000",     # bad-quotes-inline-string
-    "Q001",     # bad-quotes-multiline-string
-    "Q002",     # bad-quotes-docstring
-    "Q003",     # avoidable-escaped-quote
-    "W191",     # tab-indentation
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = [
+    "SLF001", # private-member-access
+    "BLE001", # blind-except
+]
+"src/2021/*" = ["ALL"]
+"src/2022/*" = ["ALL"]
+"src/2023/*" = ["ALL"]
+"src/2024/*" = ["ALL"]
 
 [tool.ruff.format]
 docstring-code-format = true
-skip-magic-trailing-comma = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.pyright]
 reportAssignmentType = "none"

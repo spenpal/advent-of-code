@@ -13,12 +13,7 @@ def getSuccessors(cavern, state):
     row, col = state
     successors = []
 
-    for nextRow, nextCol in [
-        (row - 1, col),
-        (row + 1, col),
-        (row, col - 1),
-        (row, col + 1),
-    ]:
+    for nextRow, nextCol in [(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)]:
         if 0 <= nextRow < length and 0 <= nextCol < length:
             stepCost = cavern[nextRow][nextCol]
             successors.append((stepCost, (nextRow, nextCol)))

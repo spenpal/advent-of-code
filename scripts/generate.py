@@ -1,4 +1,6 @@
+import json
 import shutil
+import sys
 from argparse import ArgumentParser, Namespace
 from datetime import datetime
 from pathlib import Path
@@ -44,20 +46,26 @@ def parse_args() -> Namespace:
         choices=range(1, 26),
         nargs="+",
         default=[day] if is_aoc_active else [-1],
-        help="Day(s) of the puzzles. Provide a single day (e.g., '-d 5') or a range (e.g., '-d 1 5'). (default: current day, if AOC is active)",
+        help=(
+            "Day(s) of the puzzles. Provide a single day (e.g., '-d 5') or a "
+            "range (e.g., '-d 1 5'). (default: current day, if AOC is active)"
+        ),
         metavar="{1-25}",
+    )
+    parser.add_argument(
+        "--llm-extract",
+        action="store_true",
+        help=("Use LLM to extract examples from puzzle description (requires OPENROUTER_API_KEY)"),
     )
 
     args = parser.parse_args()
     if args.days == -1:
         parser.error(
             "The -d/--days flag is required outside the Advent of Code active period (Dec 1 - Dec 25). "
-            "Please specify a day using '-d DAY' or a range with '-d START END'."
+            "Please specify a day using '-d DAY' or a range with '-d START END'.",
         )
     if len(args.days) > 2:
-        parser.error(
-            "The -d/--days flag accepts only 1 or 2 values (a single day or a range)."
-        )
+        parser.error("The -d/--days flag accepts only 1 or 2 values (a single day or a range).")
 
     return args
 
@@ -70,7 +78,7 @@ def create_file(path: Path, content: str) -> None:
         print(f"Skipped (already exists): {path}")
 
 
-def generate(year: int, days: list[int]) -> None:
+def generate(year: int, days: list[int], llm_extract: bool = False) -> None:
     year_src_dir = SRC_DIR / str(year)
     year_tests_dir = TESTS_DIR / str(year)
     year_src_dir.mkdir(parents=True, exist_ok=True)
@@ -88,8 +96,22 @@ def generate(year: int, days: list[int]) -> None:
             print(f"Skipped: {day_file} (already exists)")
 
         if not test_file.exists():
-            shutil.copy(TEST_TEMPLATE_PATH, test_file)
-            print(f"Created: {test_file}")
+            if llm_extract:
+                scripts_dir = Path(__file__).parent
+                if str(scripts_dir) not in sys.path:
+                    sys.path.insert(0, str(scripts_dir))
+                from extract_examples import extract_examples  # noqa: PLC0415
+
+                examples = extract_examples(year, day)
+                if examples:
+                    test_file.write_text(json.dumps(examples, indent=2) + "\n")
+                    print(f"Extracted {len(examples)} example(s): {test_file}")
+                else:
+                    shutil.copy(TEST_TEMPLATE_PATH, test_file)
+                    print(f"⚠️  LLM extraction failed for day {day}, created empty template: {test_file}")
+            else:
+                shutil.copy(TEST_TEMPLATE_PATH, test_file)
+                print(f"Created: {test_file}")
         else:
             print(f"Skipped: {test_file} (already exists)")
 
@@ -98,7 +120,7 @@ def main() -> None:
     args = parse_args()
     year, days = args.year, args.days
 
-    generate(year, days=days)
+    generate(year, days=days, llm_extract=args.llm_extract)
 
 
 if __name__ == "__main__":
