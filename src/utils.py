@@ -33,7 +33,9 @@ class WordSearch:
         if not all(len(row) == len(grid[0]) for row in grid):
             msg = "All rows in the grid must have the same length."
             raise ValueError(msg)
-        self.grid = grid if case_sensitive else [[c.lower() for c in row] for row in grid]
+        self.grid = (
+            grid if case_sensitive else [[c.lower() for c in row] for row in grid]
+        )
         self.case_sensitive = case_sensitive
         self.rows = len(grid)
         self.cols = len(grid[0]) if grid else 0
@@ -75,8 +77,14 @@ class WordSearch:
         """
         matches = []
         for row_step, col_step in self.direction.values():
-            positions = [(row + row_step * i, col + col_step * i) for i in range(len(target_word))]
-            word = "".join(self.grid[r][c] if self._valid_position(r, c) else "" for r, c in positions)
+            positions = [
+                (row + row_step * i, col + col_step * i)
+                for i in range(len(target_word))
+            ]
+            word = "".join(
+                self.grid[r][c] if self._valid_position(r, c) else ""
+                for r, c in positions
+            )
             if word == target_word:
                 matches.append(positions)
         return matches
@@ -182,3 +190,60 @@ def wrap_step(
     wrap_count, remainder = divmod(offset, range_size)
     new_val = min_val + remainder
     return new_val, wrap_count
+
+
+def factors(n: int) -> list[int]:
+    """Find all factors of a number.
+
+    Args:
+        n: The number to find the factors of.
+
+    Returns:
+        A list of all factors of the number (sorted in ascending order)
+
+    Time Complexity:
+        O(sqrt(n) + k log k), where k is the number of factors found.
+        The main loop runs in O(sqrt(n)), and the final sort of the list
+        of factors is O(k log k).
+    """
+    if n < 1:
+        return []
+    factors: list[int] = []
+    for i in range(1, int(n**0.5) + 1):
+        if n % i == 0:
+            factors.append(i)
+            if (j := n // i) != i:
+                factors.append(j)
+    return sorted(factors)
+
+
+def split_string(string: str, parts: int) -> list[str]:
+    """Split `string` into `parts` substrings whose lengths differ by at most 1.
+
+    Example:
+        string = "abcdefgh", parts = 3  ->  ['abc', 'def', 'gh']
+        string = "abcdefgh", parts = 4  ->  ['ab', 'cd', 'ef', 'gh']
+
+    Args:
+        string: The string to split.
+        parts: The number of parts to split the string into.
+
+    Returns:
+        A list of substrings.
+    """
+    if parts <= 0:
+        msg = "Parts must be positive."
+        raise ValueError(msg)
+
+    base, extra = divmod(len(string), parts)
+
+    substrings: list[str] = []
+    start = 0
+
+    for i in range(parts):
+        size = base + (1 if i < extra else 0)
+        end = start + size
+        substrings.append(string[start:end])
+        start = end
+
+    return substrings

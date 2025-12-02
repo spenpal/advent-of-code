@@ -54,7 +54,10 @@ def reduce(snum):
                     left, right = ele
                     snum[idx] = Integer(0)
 
-                    next_left, next_right = (flat_snum.index(left) - 1, flat_snum.index(right) + 1)
+                    next_left, next_right = (
+                        flat_snum.index(left) - 1,
+                        flat_snum.index(right) + 1,
+                    )
                     if next_left >= 0:
                         flat_snum[next_left] += left.val
                     if next_right < len(flat_snum):
@@ -107,4 +110,8 @@ def part1(data):
 
 
 def part2(snums):
-    return max(magnitude(reduce(add(deepcopy(snum1), deepcopy(snum2)))) for snum1 in snums for snum2 in snums)
+    return max(
+        magnitude(reduce(add(deepcopy(snum1), deepcopy(snum2))))
+        for snum1 in snums
+        for snum2 in snums
+    )

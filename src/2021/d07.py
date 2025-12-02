@@ -9,10 +9,16 @@ def explicit_sum(n):
 
 
 def part1(crabs):
-    crabs = [sum(abs(pos - crab) for crab in crabs) for pos in range(min(crabs), max(crabs) + 1)]
+    crabs = [
+        sum(abs(pos - crab) for crab in crabs)
+        for pos in range(min(crabs), max(crabs) + 1)
+    ]
     return min(crabs)
 
 
 def part2(crabs):
-    crabs = [sum(explicit_sum(abs(pos - crab)) for crab in crabs) for pos in range(min(crabs), max(crabs) + 1)]
+    crabs = [
+        sum(explicit_sum(abs(pos - crab)) for crab in crabs)
+        for pos in range(min(crabs), max(crabs) + 1)
+    ]
     return min(crabs)

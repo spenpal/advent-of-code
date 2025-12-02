@@ -13,9 +13,13 @@ def encode(pattern):
     signal_mapping = dict.fromkeys("abcdefg", "")
 
     [digit1] = [digit for digit in pattern if len(digit) == 2]
-    [digit3] = [digit for digit in pattern if len(digit) == 5 and set(digit1) < set(digit)]
+    [digit3] = [
+        digit for digit in pattern if len(digit) == 5 and set(digit1) < set(digit)
+    ]
     [digit4] = [digit for digit in pattern if len(digit) == 4]
-    [digit6] = [digit for digit in pattern if len(digit) == 6 and not set(digit1) < set(digit)]
+    [digit6] = [
+        digit for digit in pattern if len(digit) == 6 and not set(digit1) < set(digit)
+    ]
     [digit7] = [digit for digit in pattern if len(digit) == 3]
     [digit8] = [digit for digit in pattern if len(digit) == 7]
 

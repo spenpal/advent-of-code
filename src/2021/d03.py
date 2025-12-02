@@ -32,10 +32,16 @@ def part2(bnums):
         most_common_bits = Counter(position_bits).most_common()
 
         if most_common_bits[0][1] == most_common_bits[1][1]:
-            oxygen_generator_bnums = [bnum for bnum in oxygen_generator_bnums if bnum[bit_position] == "1"]
+            oxygen_generator_bnums = [
+                bnum for bnum in oxygen_generator_bnums if bnum[bit_position] == "1"
+            ]
         else:
             most_common_bit = most_common_bits[0][0]
-            oxygen_generator_bnums = [bnum for bnum in oxygen_generator_bnums if bnum[bit_position] == most_common_bit]
+            oxygen_generator_bnums = [
+                bnum
+                for bnum in oxygen_generator_bnums
+                if bnum[bit_position] == most_common_bit
+            ]
 
         bit_position += 1
 
@@ -45,13 +51,25 @@ def part2(bnums):
         most_common_bits = Counter(position_bits).most_common()
 
         if most_common_bits[0][1] == most_common_bits[1][1]:
-            co2_scrubber_bnums = [bnum for bnum in co2_scrubber_bnums if bnum[bit_position] == "0"]
+            co2_scrubber_bnums = [
+                bnum for bnum in co2_scrubber_bnums if bnum[bit_position] == "0"
+            ]
         else:
             least_common_bit = most_common_bits[1][0]
-            co2_scrubber_bnums = [bnum for bnum in co2_scrubber_bnums if bnum[bit_position] == least_common_bit]
+            co2_scrubber_bnums = [
+                bnum
+                for bnum in co2_scrubber_bnums
+                if bnum[bit_position] == least_common_bit
+            ]
 
         bit_position += 1
 
-    [oxygen_generator_bnum], [co2_scrubber_bnum] = (oxygen_generator_bnums, co2_scrubber_bnums)
-    oxygen_generator_dnum, co2_scrubber_dnum = (int(oxygen_generator_bnum, 2), int(co2_scrubber_bnum, 2))
+    [oxygen_generator_bnum], [co2_scrubber_bnum] = (
+        oxygen_generator_bnums,
+        co2_scrubber_bnums,
+    )
+    oxygen_generator_dnum, co2_scrubber_dnum = (
+        int(oxygen_generator_bnum, 2),
+        int(co2_scrubber_bnum, 2),
+    )
     return oxygen_generator_dnum * co2_scrubber_dnum

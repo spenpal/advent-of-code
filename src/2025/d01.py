@@ -37,7 +37,9 @@ def part2(rotations: list[int]) -> int:
         )
         if new_dial_position == 0 and rotation < 0:
             times_pointed_at_zero += abs(wrap_count) + 1
-        elif dial_position == 0 and rotation < 0 and new_dial_position > MIN_DIAL_NUMBER:
+        elif (
+            dial_position == 0 and rotation < 0 and new_dial_position > MIN_DIAL_NUMBER
+        ):
             times_pointed_at_zero += abs(wrap_count) - 1
         else:
             times_pointed_at_zero += abs(wrap_count)

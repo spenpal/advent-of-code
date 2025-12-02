@@ -5,7 +5,12 @@ def parse(data: str) -> dict[int, tuple]:
     target_area = data.strip()
     x_match = re.search(r"x=(-?\d+)..(-?\d+)", target_area)
     y_match = re.search(r"y=(-?\d+)..(-?\d+)", target_area)
-    xf_min, xf_max, yf_min, yf_max = (int(x_match[1]), int(x_match[2]), int(y_match[1]), int(y_match[2]))
+    xf_min, xf_max, yf_min, yf_max = (
+        int(x_match[1]),
+        int(x_match[2]),
+        int(y_match[1]),
+        int(y_match[2]),
+    )
     return {1: (yf_min,), 2: (xf_min, xf_max, yf_min, yf_max)}
 
 

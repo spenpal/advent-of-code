@@ -29,7 +29,11 @@ def part1(energy):
     flash_count = 0
     for step in range(100):
         energy = [list(map(lambda x: x + 1, row)) for row in energy]
-        flash_count += sum(checkFlash(energy, row, col) for row in range(row_length) for col in range(col_length))
+        flash_count += sum(
+            checkFlash(energy, row, col)
+            for row in range(row_length)
+            for col in range(col_length)
+        )
     return flash_count
 
 
@@ -40,7 +44,11 @@ def part2(energy):
 
     while flash_count != total_octopuses:
         energy = [list(map(lambda x: x + 1, row)) for row in energy]
-        flash_count = sum(checkFlash(energy, row, col) for row in range(row_length) for col in range(col_length))
+        flash_count = sum(
+            checkFlash(energy, row, col)
+            for row in range(row_length)
+            for col in range(col_length)
+        )
         step += 1
 
     return step

@@ -15,7 +15,9 @@ def checkLowPoint(hmap, row, col):
     rightPoint = hmap[row][col + 1] if col + 1 < col_size else 10
     downPoint = hmap[row + 1][col] if row + 1 < row_size else 10
 
-    return all(point < adjPoint for adjPoint in [upPoint, leftPoint, rightPoint, downPoint])
+    return all(
+        point < adjPoint for adjPoint in [upPoint, leftPoint, rightPoint, downPoint]
+    )
 
 
 def part1(hmap):
@@ -32,7 +34,12 @@ def part1(hmap):
 
 def part2(hmap):
     def findBasinSize(hmap, row, col, visited):
-        if not 0 <= row < len(hmap) or not 0 <= col < len(hmap[0]) or (row, col) in visited or hmap[row][col] == 9:
+        if (
+            not 0 <= row < len(hmap)
+            or not 0 <= col < len(hmap[0])
+            or (row, col) in visited
+            or hmap[row][col] == 9
+        ):
             return 0
 
         visited.add((row, col))
@@ -53,5 +60,7 @@ def part2(hmap):
                 low_points.append((row, col))
 
     # Find basin sizes
-    top_three_basins = sorted([findBasinSize(hmap, row, col, set()) for row, col in low_points], reverse=True)[:3]
+    top_three_basins = sorted(
+        [findBasinSize(hmap, row, col, set()) for row, col in low_points], reverse=True
+    )[:3]
     return math.prod(top_three_basins)
