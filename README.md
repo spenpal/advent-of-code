@@ -38,17 +38,18 @@ This project uses [uv](https://github.com/astral-sh/uv) for dependency managemen
 2. Configure your Advent of Code session token:
 
    - Get your session token from your browser's cookies (visit adventofcode.com and check cookies for `session`)
-   - Set it as an environment variable or in `~/.config/aocd/token`:
-     ```bash
-     echo "your_session_token_here" > ~/.config/aocd/token
-     ```
+   - For step-by-step instructions, see [this guide](https://github.com/wimglenn/advent-of-code-wim/issues/1)
+   - You can set it in one of three ways:
+     1. **In `.env` file (recommended)**: Copy `.env.example` to `.env` and set `AOC_SESSION=your_token_here`
+     2. **As environment variable**: `export AOC_SESSION="your_token_here"`
+     3. **In config file**: `echo "your_token_here" > ~/.config/aocd/token`
 
 3. (Optional) Configure OpenRouter API key for LLM example extraction:
    - Get your API key from [OpenRouter](https://openrouter.ai/keys)
    - Copy `.env.example` to `.env` and set your `OPENROUTER_API_KEY`:
      ```bash
      cp .env.example .env
-     # Edit .env and set your OPENROUTER_API_KEY
+     # Edit .env and set your OPENROUTER_API_KEY and AOC_SESSION
      ```
 
 ## Usage
@@ -127,13 +128,11 @@ make gen DAY=2
 
 ### LLM-Based Example Extraction
 
-Optionally extract examples automatically using AI via OpenRouter:
+`make gen` automatically attempts to extract examples using AI via OpenRouter. If extraction fails (e.g., API key not set, network error, or puzzle not unlocked), it falls back to creating an empty template.
 
 ```bash
-# Set your OpenRouter API key and model (see .env.example for details)
-
-# Generate with automatic example extraction
-make gen-llm DAY=5
+# Generate templates (automatically attempts LLM extraction)
+make gen DAY=5
 
 # Or extract examples for existing puzzle files
 make extract DAY=5
@@ -167,8 +166,7 @@ make test1             # Test current day (part 1)
 make test2             # Test current day (part 2)
 make submit1           # Submit part 1 (current day)
 make submit2           # Submit part 2 (current day)
-make gen               # Generate templates for current day
-make gen-llm           # Generate with LLM example extraction
+make gen               # Generate templates for current day (with LLM extraction)
 make extract           # Extract examples for existing puzzles
 make lint              # Check code with ruff
 make lint-fix          # Check and auto-fix code with ruff
@@ -281,7 +279,28 @@ Each solution file (`src/YYYY/dDD.py`) must implement three functions:
 
 3. **`part2(...)`**: Solves part 2 of the puzzle. Receives unpacked arguments from `parse()[2]`.
 
-Example:
+### Parameter Naming
+
+**Important:** The template uses generic parameter names (`data`), but you should **rename them to be descriptive** based on what your `parse()` function returns. The tuple returned by `parse()` gets unpacked when calling `part1()` and `part2()`, so use meaningful names that reflect the actual data structure.
+
+**Example with multiple parameters:**
+
+```python
+def parse(data: str) -> dict[int, tuple]:
+    numbers = [int(x) for x in data.split()]
+    names = data.strip().splitlines()
+    return {1: (numbers, names), 2: (numbers, names)}
+
+def part1(numbers: list[int], names: list[str]) -> int:
+    # Use numbers and names here
+    return result
+
+def part2(numbers: list[int], names: list[str]) -> int:
+    # Use numbers and names here
+    return result
+```
+
+**Example with single parameter:**
 
 ```python
 def parse(data: str) -> dict[int, tuple]:
@@ -289,13 +308,19 @@ def parse(data: str) -> dict[int, tuple]:
     return {1: (lines,), 2: (lines,)}
 
 def part1(lines: list[str]) -> int:
-    # Part 1 solution
+    # Use lines here
     return result
 
 def part2(lines: list[str]) -> int:
-    # Part 2 solution
+    # Use lines here
     return result
 ```
+
+**Best practices:**
+
+- Use descriptive names that indicate what the data represents (e.g., `ids`, `grid`, `instructions`, `pairs`)
+- Match the number of parameters to the tuple size returned by `parse()`
+- Add type hints to make the code more readable and catch errors early
 
 ## Test File Format
 

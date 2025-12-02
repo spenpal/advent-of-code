@@ -1,4 +1,4 @@
-.PHONY: setup run test test1 test2 submit1 submit2 gen gen-llm extract lint lint-fix format format-check help
+.PHONY: setup run test test1 test2 submit1 submit2 gen extract lint lint-fix format format-check help
 
 # Setup: Install dependencies and configure pre-commit hooks
 setup:
@@ -30,12 +30,9 @@ submit2:
 	@uv run python main.py $(if $(YEAR),-y $(YEAR)) $(if $(DAY),-d $(DAY)) -s 2
 
 # Generate templates (defaults to current day during AOC active period)
+# Automatically attempts LLM extraction, falls back to empty template if it fails
 gen:
 	@uv run python scripts/generate.py $(if $(YEAR),-y $(YEAR)) $(if $(DAY),-d $(DAY))
-
-# Generate with LLM extraction
-gen-llm:
-	@uv run python scripts/generate.py --llm-extract $(if $(YEAR),-y $(YEAR)) $(if $(DAY),-d $(DAY))
 
 # Extract examples for existing puzzles
 extract:
@@ -78,11 +75,10 @@ help:
 	@echo "  make submit1 YEAR=2024 DAY=5  - Submit part 1 (specific year/day)"
 	@echo ""
 	@echo "Generating Templates:"
-	@echo "  make gen              - Generate current day"
+	@echo "  make gen              - Generate current day (with LLM extraction)"
 	@echo "  make gen DAY=5         - Generate specific day"
 	@echo "  make gen DAY=\"1 5\"     - Generate range of days"
 	@echo "  make gen YEAR=2024 DAY=5  - Generate specific year/day"
-	@echo "  make gen-llm          - Generate with LLM example extraction"
 	@echo "  make extract          - Extract examples for existing puzzles"
 	@echo ""
 	@echo "Linting & Formatting:"

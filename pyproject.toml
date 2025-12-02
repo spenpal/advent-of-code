@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "advent-of-code-data>=2.0.4",
     "httpx>=0.28.1",
+    "python-dotenv>=1.2.1",
 ]
 
 [dependency-groups]
@@ -40,14 +41,21 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"main.py" = [
+    "E402", # module-import-not-at-top-of-file
+]
 "scripts/*" = [
     "SLF001", # private-member-access
     "BLE001", # blind-except
+    "E402",   # module-import-not-at-top-of-file
 ]
 "src/2021/*" = ["ALL"]
 "src/2022/*" = ["ALL"]
 "src/2023/*" = ["ALL"]
 "src/2024/*" = ["ALL"]
+"templates/*" = [
+    "ARG001", # unused-function-argument
+]
 
 [tool.ruff.format]
 docstring-code-format = true

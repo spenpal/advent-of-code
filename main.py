@@ -7,6 +7,10 @@ from time import perf_counter
 from types import ModuleType
 from zoneinfo import ZoneInfo
 
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv(find_dotenv())
+
 from aocd import get_data, submit
 
 from tests.test import run_tests
@@ -85,12 +89,32 @@ def main() -> None:
         print(f"Testing Year {year}, Day {day}...")
         match args.test:
             case 0:
-                run_tests(test_file_path, part=1, parse_f=solution.parse, part_f=solution.part1)
-                run_tests(test_file_path, part=2, parse_f=solution.parse, part_f=solution.part2)
+                run_tests(
+                    test_file_path,
+                    part=1,
+                    parse_f=solution.parse,
+                    part_f=solution.part1,
+                )
+                run_tests(
+                    test_file_path,
+                    part=2,
+                    parse_f=solution.parse,
+                    part_f=solution.part2,
+                )
             case 1:
-                run_tests(test_file_path, part=1, parse_f=solution.parse, part_f=solution.part1)
+                run_tests(
+                    test_file_path,
+                    part=1,
+                    parse_f=solution.parse,
+                    part_f=solution.part1,
+                )
             case 2:
-                run_tests(test_file_path, part=2, parse_f=solution.parse, part_f=solution.part2)
+                run_tests(
+                    test_file_path,
+                    part=2,
+                    parse_f=solution.parse,
+                    part_f=solution.part2,
+                )
     elif args.submit:
         match args.submit[0]:
             case 1:
