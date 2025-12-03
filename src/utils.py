@@ -1,7 +1,7 @@
 from collections.abc import Iterable, Sequence
 from itertools import chain, zip_longest
 
-from .type_defs import Grid, Pair, T
+from .type_defs import Grid, Pair, T, TComparable
 
 
 class WordSearch:
@@ -247,3 +247,24 @@ def split_string(string: str, parts: int) -> list[str]:
         start = end
 
     return substrings
+
+
+def max_with_index(a: Iterable[TComparable]) -> tuple[int, TComparable]:
+    """Returns the maximum value and its index in an iterable.
+
+    Args:
+        a: The iterable to find the maximum value of.
+
+    Returns:
+        A tuple of (index, value) where index is the position of the maximum value.
+    """
+    m: TComparable | None = None
+    mi = -1
+    for i, v in enumerate(a):
+        if m is None or v > m:
+            m = v
+            mi = i
+    if m is None:
+        msg = "max_with_index() arg is an empty sequence"
+        raise ValueError(msg)
+    return (mi, m)
