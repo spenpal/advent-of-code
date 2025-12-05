@@ -23,7 +23,13 @@ def part1(fresh_ranges: list[tuple[int, int]], ingredient_ids: list[int]) -> int
 
 
 def part2(fresh_ranges: list[tuple[int, int]], _ingredient_ids: list[int]) -> int:
+    """
+    Time Complexity: O(n log n)
+    Space Complexity: O(n).
+    """  # noqa: D205, D212
+
     def is_overlap(range1: tuple[int, int], range2: tuple[int, int]) -> bool:
+        """Check if two ranges overlap."""
         return max(range1[0], range2[0]) <= min(range1[1], range2[1])
 
     def merge_ranges(
