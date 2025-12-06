@@ -34,7 +34,7 @@ class WordSearch:
             msg = "All rows in the grid must have the same length."
             raise ValueError(msg)
         self.grid = (
-            grid if case_sensitive else [[c.lower() for c in row] for row in grid]
+            grid if case_sensitive else [[char.lower() for char in row] for row in grid]
         )
         self.case_sensitive = case_sensitive
         self.rows = len(grid)
@@ -78,12 +78,14 @@ class WordSearch:
         matches = []
         for row_step, col_step in self.direction.values():
             positions = [
-                (row + row_step * i, col + col_step * i)
-                for i in range(len(target_word))
+                (row + row_step * offset, col + col_step * offset)
+                for offset in range(len(target_word))
             ]
             word = "".join(
-                self.grid[r][c] if self._valid_position(r, c) else ""
-                for r, c in positions
+                self.grid[row_idx][col_idx]
+                if self._valid_position(row_idx, col_idx)
+                else ""
+                for row_idx, col_idx in positions
             )
             if word == target_word:
                 matches.append(positions)
@@ -116,17 +118,17 @@ class WordSearch:
         return matches
 
 
-def manhattan_distance(p1: Pair[int], p2: Pair[int]) -> int:
+def manhattan_distance(point1: Pair[int], point2: Pair[int]) -> int:
     """Calculate the Manhattan distance between two points.
 
     Args:
-        p1: The first point as a (row, col) pair.
-        p2: The second point as a (row, col) pair.
+        point1: The first point as a (row, col) pair.
+        point2: The second point as a (row, col) pair.
 
     Returns:
         The Manhattan distance between the two points.
     """
-    return abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
+    return abs(point1[0] - point2[0]) + abs(point1[1] - point2[1])
 
 
 def merge(iterable1: Iterable[T], iterable2: Iterable[T]) -> list[T]:
@@ -163,7 +165,7 @@ def out_of_bounds(row_len: int, col_len: int, row: int, col: int) -> bool:
 
 def wrap_step(
     *,
-    val: int,
+    value: int,
     min_val: int,
     max_val: int,
     step: int = 1,
@@ -174,7 +176,7 @@ def wrap_step(
     around if the result exceeds the bounds [min_val, max_val].
 
     Args:
-        val: The current value.
+        value: The current value.
         min_val: The minimum value in the range (inclusive).
         max_val: The maximum value in the range (inclusive).
         step: The step amount to add. Defaults to 1.
@@ -186,17 +188,17 @@ def wrap_step(
           Positive for forward wraps, negative for backward wraps.
     """
     range_size = max_val - min_val + 1
-    offset = val - min_val + step
+    offset = value - min_val + step
     wrap_count, remainder = divmod(offset, range_size)
     new_val = min_val + remainder
     return new_val, wrap_count
 
 
-def factors(n: int) -> list[int]:
+def factors(number: int) -> list[int]:
     """Find all factors of a number.
 
     Args:
-        n: The number to find the factors of.
+        number: The number to find the factors of.
 
     Returns:
         A list of all factors of the number (sorted in ascending order)
@@ -206,15 +208,16 @@ def factors(n: int) -> list[int]:
         The main loop runs in O(sqrt(n)), and the final sort of the list
         of factors is O(k log k).
     """
-    if n < 1:
+    if number < 1:
         return []
-    factors: list[int] = []
-    for i in range(1, int(n**0.5) + 1):
-        if n % i == 0:
-            factors.append(i)
-            if (j := n // i) != i:
-                factors.append(j)
-    return sorted(factors)
+    factors_list: list[int] = []
+    for factor in range(1, int(number**0.5) + 1):
+        if number % factor == 0:
+            factors_list.append(factor)
+            complement_factor = number // factor
+            if complement_factor != factor:
+                factors_list.append(complement_factor)
+    return sorted(factors_list)
 
 
 def split_string(string: str, parts: int) -> list[str]:
@@ -240,8 +243,8 @@ def split_string(string: str, parts: int) -> list[str]:
     substrings: list[str] = []
     start = 0
 
-    for i in range(parts):
-        size = base + (1 if i < extra else 0)
+    for part_index in range(parts):
+        size = base + (1 if part_index < extra else 0)
         end = start + size
         substrings.append(string[start:end])
         start = end
@@ -249,22 +252,98 @@ def split_string(string: str, parts: int) -> list[str]:
     return substrings
 
 
-def max_with_index(a: Iterable[TComparable]) -> tuple[int, TComparable]:
+def max_with_index(iterable: Iterable[TComparable]) -> tuple[int, TComparable]:
     """Returns the maximum value and its index in an iterable.
 
     Args:
-        a: The iterable to find the maximum value of.
+        iterable: The iterable to find the maximum value of.
 
     Returns:
         A tuple of (index, value) where index is the position of the maximum value.
     """
-    m: TComparable | None = None
-    mi = -1
-    for i, v in enumerate(a):
-        if m is None or v > m:
-            m = v
-            mi = i
-    if m is None:
+    max_value: TComparable | None = None
+    max_index = -1
+    for index, value in enumerate(iterable):
+        if max_value is None or value > max_value:
+            max_value = value
+            max_index = index
+    if max_value is None:
         msg = "max_with_index() arg is an empty sequence"
         raise ValueError(msg)
-    return (mi, m)
+    return (max_index, max_value)
+
+
+def transpose(
+    grid: Grid[T],
+    fillvalue: T | None = None,
+) -> list[list[T | None]]:
+    """Transpose a 2D array (rows become columns and columns become rows).
+
+    Handles irregular grids by padding shorter rows with fillvalue.
+
+    Args:
+        grid: A 2D grid to transpose. Rows can have different lengths.
+        fillvalue: Value to use for missing elements when rows have different
+            lengths. Defaults to None. If None, None values are filtered out
+            from the result.
+
+    Returns:
+        A new grid where rows and columns are swapped. If fillvalue is None,
+        None values are filtered out, resulting in columns of varying lengths.
+
+    Example:
+        [[1, 2, 3], [4, 5, 6]] -> [[1, 4], [2, 5], [3, 6]]
+        [['3', '2', '1'], ['5', '4'], ['6']] ->
+        [['3', '5', '6'], ['2', '4'], ['1']]
+    """
+    if not grid:
+        return []
+    transposed = [list(col) for col in zip_longest(*grid, fillvalue=fillvalue)]
+    if fillvalue is None:
+        return [[item for item in col if item is not None] for col in transposed]
+    return transposed
+
+
+def all_same(iterable: Iterable[T], value: T | None = None) -> bool:
+    """Check if all values in an iterable are the same.
+
+    Stops as soon as it finds a different value,
+    without needing to consume the entire iterable.
+
+    Args:
+        iterable: The iterable to check.
+        value: Optional specific value to check against. If provided,
+            checks if all values equal this value. If not provided,
+            checks if all values are equal to each other.
+
+    Returns:
+        True if all values are the same (or equal to the provided value)
+        or if the iterable is empty, False otherwise.
+
+    Examples:
+        >>> all_same([1, 1, 1, 1])
+        True
+        >>> all_same([1, 2, 1])
+        False
+        >>> all_same([])
+        True
+        >>> all_same(["a", "a", "a"])
+        True
+        >>> all_same([1, 1, 1], 1)
+        True
+        >>> all_same([1, 1, 1], 2)
+        False
+    """
+    iterator = iter(iterable)
+
+    if value is not None:
+        # Check if all values equal the provided value
+        return all(item == value for item in iterator)
+
+    try:
+        first_value = next(iterator)
+    except StopIteration:
+        # Empty iterable - considered all same
+        return True
+
+    return all(item == first_value for item in iterator)
