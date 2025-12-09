@@ -15,3 +15,6 @@ Pair = tuple[T, T]
 Pairs = list[Pair]
 
 Grid = list[list[T]]
+
+Coord2D = tuple[int, int]
+Coord3D = tuple[int, int, int]
